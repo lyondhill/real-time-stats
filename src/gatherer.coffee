@@ -17,7 +17,7 @@ module.exports = class Gatherer
         mem_total = parseInt(result[2]) + parseInt(result[3]) + parseInt(result[4]) + parseInt(result[5])
         mem = ((mem_total - parseInt(result[5])) / mem_total * 100)
         swap = parseInt(result[6]) / (parseInt(result[6]) + parseInt(result[7])) *  100
-        load = parseInt(result[9])
+        load = parseInt(result[7])
         console.log "cpu: #{cpu}, mem: #{mem}, swap: #{swap}, load: #{load}"
 
     dstat.stderr.on 'data', (data) =>
