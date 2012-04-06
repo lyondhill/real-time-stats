@@ -8,6 +8,5 @@ module.exports = class Gatherer
 
   run_stats: () ->
     dstat = spawn 'dstat', ['-cmsl']
-    dstat.stdout
     dstat.stdout.on 'data', (data) =>
       console.log data
