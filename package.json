@@ -16,6 +16,7 @@
     "express": "",
     "socket.io": "",
     "daemon": "0.4.0",
+    "wordwrap": "",
     "optimist": "0.2.8",
     "redis": "0.7.1"
   },
