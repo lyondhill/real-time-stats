@@ -1,3 +1,4 @@
+net = require 'net'
 spawn = require('child_process').spawn
 
 module.exports = class Gatherer
