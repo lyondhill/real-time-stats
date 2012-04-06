@@ -3,7 +3,7 @@ spawn = require('child_process').spawn
 module.exports = class Gatherer
 
   constructor: (@host, @port) ->
-    @redis = require('redis').createClient(@port, @host)
+    # @redis = require('redis').createClient(@port, @host)
     @run_stats()
 
   run_stats: () ->
