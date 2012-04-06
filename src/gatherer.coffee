@@ -12,4 +12,4 @@ module.exports = class Gatherer
       console.log data
 
     dstat.stderr.on 'data', (data) =>
-      console.log data
+      console.log data.toString()
