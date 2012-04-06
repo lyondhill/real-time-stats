@@ -1,6 +1,6 @@
 Gatherer = require './gatherer'
 {argv} = require 'optimist'
-daemon = require 'daemon'
+# daemon = require 'daemon'
 
 port = argv.p ? argv.port ? 6379
 host = argv.h ? argv.host ? '127.0.0.1'
