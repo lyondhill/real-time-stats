@@ -9,7 +9,10 @@ module.exports = class Gatherer
   run_stats: () ->
     dstat = spawn 'dstat', ['-cmsl']
     dstat.stdout.on 'data', (data) =>
-      console.log data.toString()
+      line = data.to_string()
+      console.log line
+      if result = line.match /\d+\s+\d+\s+(\d+)\s+\d+\s+\d+\s+\d+\|\s+(\d+)[MKG]\s+(\d+)[MKG]\s+(\d+)[MKG]\s+(\d+)[MKG]\|\s+(\d+)[MKG]\s+(\d+)[MKG]\|\s+(\d+)\s+\d+\s+\d+/
+        console.log result
 
     dstat.stderr.on 'data', (data) =>
       console.log data.toString()
