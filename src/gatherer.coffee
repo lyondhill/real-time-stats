@@ -10,9 +10,9 @@ module.exports = class Gatherer
     dstat = spawn 'dstat', ['-cmsl']
     dstat.stdout.on 'data', (data) =>
       line = data.toString()
-      console.log line
+      # console.log line
       if result = line.match /\d+\s+\d+\s+(\d+)\s+\d+\s+\d+\s+\d+\|\s+(\d+)[MKG]\s+(\d+)[MKG]\s+(\d+)[MKG]\s+(\d+)[MKG]\|\s+(\d+)[MKG]\s+(\d+)[MKG]\|\s+(\d+)\s+\d+\s+\d+/
-        console.log result
+        # console.log result
         cpu = 100 - parseInt(result[1])
         mem_total = parseInt(result[2]) + parseInt(result[3]) + parseInt(result[4]) + parseInt(result[5])
         mem = ((mem_total - parseInt(result[5])) / mem_total * 100)
