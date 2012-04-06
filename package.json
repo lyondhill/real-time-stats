@@ -1,0 +1,25 @@
+{
+  "author": "Lyon Hill <lyondhill@gmail.com>",
+  "name": "RealTimeStats",
+  "description": "Real time statistics using node.js/redis",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:lyondhill/real-time-stats.git"
+  },
+  "bin": {"real-time-serv": "./bin/real-time-serv", "real-time-gath": "./bin/real-time-gath"},
+  "engines": {
+    "node": "0.6"
+  },
+  "main": "./lib/pubsub.js",
+  "dependencies": {
+    "express": "",
+    "socket.io": "",
+    "daemon": "0.4.0",
+    "optimist": "0.2.8",
+    "redis": "0.7.1"
+  },
+  "devDependencies": {
+    "nodeunit": ">= 0.5.0"
+  }
+}
