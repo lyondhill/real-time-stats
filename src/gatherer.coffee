@@ -4,7 +4,7 @@ module.exports = class Gatherer
 
   constructor: (@host, @port) ->
     @redis = require('redis').createClient(@port, @host)
-    run_stats()
+    @run_stats()
 
   run_stats: () ->
     dstat = spawn 'dstat', ['-cmsl']
