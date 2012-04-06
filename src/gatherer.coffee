@@ -9,5 +9,5 @@ module.exports = class Gatherer
   run_stats: () ->
     dstat = spawn 'dstat', ['-cmsl']
     dstat.stdout
-    ps.stdout.on 'data', (data) =>
+    dstat.stdout.on 'data', (data) =>
       console.log data
