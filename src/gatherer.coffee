@@ -11,7 +11,7 @@ module.exports = class Gatherer
     dstat.stdout.on 'data', (data) =>
       line = data.toString()
       # console.log line
-      if result = line.match /\d+\s+\d+\s+(\d+)\s+\d+\s+\d+\s+\d+\|\s+(\d+)[MKG]\s+(\d+)[MKG]\s+(\d+)[MKG]\s+(\d+)[MKG]\|\s+(\d+)[MKG]\s+(\d+)[MKG]\|\s+(\d+)\s+\d+\s+\d+/
+      if result = line.match /\d+\s+\d+\s+(\d+)\s+\d+\s+\d+\s+\d+\|\s+(\d+)K{0,1}M{0,1}G{0,1}\s+(\d+)K{0,1}M{0,1}G{0,1}\s+(\d+)K{0,1}M{0,1}G{0,1}\s+(\d+)K{0,1}M{0,1}G{0,1}\|\s+(\d+)K{0,1}M{0,1}G{0,1}\s+(\d+)K{0,1}M{0,1}G{0,1}\|\s+(\d+\.?\d*)\s+(\d+\.?\d*)\s+(\d+\.?\d*)/
         # console.log result
         cpu = 100 - parseInt(result[1])
         mem_total = parseInt(result[2]) + parseInt(result[3]) + parseInt(result[4]) + parseInt(result[5])
