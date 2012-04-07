@@ -19,7 +19,7 @@ module.exports = class Gatherer
         swap = parseInt(result[6]) / (parseInt(result[6]) + parseInt(result[7])) *  100
         load = parseInt(result[8])
         console.log "cpu: #{cpu}, mem: #{mem}, swap: #{swap}, load: #{load}"
-        @redis.publish JSON.stringify {cpu: cpu, mem: mem, swap: swap, load: load}
+        @redis.publish 'local', JSON.stringify {cpu: cpu, mem: mem, swap: swap, load: load}
 
     dstat.stderr.on 'data', (data) =>
       console.log data.toString()
