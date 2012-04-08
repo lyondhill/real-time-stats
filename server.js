@@ -28,7 +28,7 @@ app.configure('production', function(){
 // Routes
 // App stuff
 app.get('/', function(req, res) {
-  res.render('index', { title: 'Express' })
+  res.render('index', { title: 'Express', servers: ['oven1', 'oven2'] })
 });
 
 app.listen(3000, function(){
@@ -58,4 +58,9 @@ io.sockets.on('connection', function (socket) {
     }, 2000)
   }, 1000);
 
+
+  socket.emit('news', { hello: 'world' });
+  socket.on('my other event', function (data) {
+    console.log(data);
+  });
 });

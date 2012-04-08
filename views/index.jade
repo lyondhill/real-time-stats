@@ -34,38 +34,39 @@ html
     h1 A basic example
     //
        2/3. This is the canvas that the graph is drawn on 
-    div
-      canvas#oven1(width='400', height='250') [No canvas support]
-    div
-      canvas#oven2(width='400', height='250') [No canvas support]
+    each server in servers
+      div
+        canvas(id=server)(width='400', height='250') [No canvas support]
     //
        3/3. This creates and displays the graph. As it is here, you can call this from the window.onload event,
          allowing you to put it in your pages header.
           
     script
+      allServers = {}
       window.onload = function ()
       {
-      oven1 = new RGraph.Bar('oven1', [10,10,10,10]);
-      oven1.Set('chart.gutter.left', 35);
-      oven1.Set('chart.colors', ['green', 'red', 'blue', 'purple']);
-      oven1.Set('chart.title', 'oven1');
-      oven1.Set('chart.labels', ['CPU','mem','swap','load']);
-      oven1.Draw();
+        servers = document.getElementsByTagName("canvas")
+        // console.log(servers.length)
 
-      oven2 = new RGraph.Bar('oven2', [20,10,10,10]);
-      console.log(oven2)
-      oven2.Set('chart.gutter.left', 35);
-      oven2.Set('chart.colors', ['green']);
-      oven2.Set('chart.title', 'oven2');
-      oven2.Set('chart.labels', ['CPU','mem','swap','load']);
-      oven2.Draw();
+        var i = 0;
+        for(i=0;i<servers.length;i++) {
+          serv = servers[i].id
+          console.log(serv)
+          allServers[serv] = new RGraph.Bar(serv, [0,0,0,0]);
+          allServers[serv].Set('chart.gutter.left', 35);
+          allServers[serv].Set('chart.colors', ['green', 'red', 'blue', 'purple']);
+          allServers[serv].Set('chart.ymax', 100)
+          allServers[serv].Set('chart.title', serv);
+          allServers[serv].Set('chart.labels', ['CPU','mem','swap','load']);
+          allServers[serv].Draw();
+        }
       }
 
       var socket = io.connect('http://localhost');
       socket.on('update', function (data) {
         // console.log(data);
         for (element in data) {
-          graph = eval(element)
+          graph = allServers[element]
           RGraph.Clear(document.getElementById(element));
           graph.data = data[element]
           console.log(graph);
