@@ -11,9 +11,11 @@
   "engines": {
     "node": "0.6"
   },
-  "main": "./lib/pubsub.js",
+  "main": "./lib/.js",
   "dependencies": {
     "express": "",
+    "stylus": ">= 0.0.1",
+    "jade": ">= 0.0.1", 
     "socket.io": "",
     "daemon": "",
     "wordwrap": "",
