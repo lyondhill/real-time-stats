@@ -68,6 +68,8 @@ html
         for (element in data) {
           graph = allServers[element]
           RGraph.Clear(document.getElementById(element));
+          console.log(element)
+          console.log(data)
           graph.data = data[element]
           console.log(graph);
           graph.Draw();

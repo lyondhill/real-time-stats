@@ -1,5 +1,5 @@
-
-var express = require('express')
+var redis = require("redis").createClient();
+var express = require('express');
   // , routes = require('./routes');
 
 var app = module.exports = express.createServer();
@@ -31,6 +31,7 @@ app.get('/', function(req, res) {
   res.render('index', { title: 'Express', servers: ['oven1', 'oven2'] })
 });
 
+
 app.listen(3000, function(){
   console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
 });
@@ -39,28 +40,33 @@ app.listen(3000, function(){
 
 // Socket.io stuff
 io.sockets.on('connection', function (socket) {
+
+  redis.subscribe("update")
+  redis.on("message", function (channel, message) {
+    socket.emit("update", JSON.parse(message))
+  });
   // socket.emit("update", { oven1: [80,60,38,1.0] })
   // socket.emit("update", { oven2: [60,80,33,0.32] })
-  setInterval(function() {
-    socket.emit("update", { oven1: [80,60,38,1.0] })
-  }, 2000)
-  setTimeout(function() {
-    setInterval(function() {
-      socket.emit("update", { oven1: [60,80,33,0.32] })
-    }, 2000)
-  }, 1000);
-  setInterval(function() {
-    socket.emit("update", { oven2: [19,14,33,2.0] })
-  }, 2000)
-  setTimeout(function() {
-    setInterval(function() {
-      socket.emit("update", { oven2: [68,45,23,50] })
-    }, 2000)
-  }, 1000);
+  // setInterval(function() {
+  //   socket.emit("update", { oven1: [80,60,38,1.0] })
+  // }, 2000)
+  // setTimeout(function() {
+  //   setInterval(function() {
+  //     socket.emit("update", { oven1: [60,80,33,0.32] })
+  //   }, 2000)
+  // }, 1000);
+  // setInterval(function() {
+  //   socket.emit("update", { oven2: [19,14,33,2.0] })
+  // }, 2000)
+  // setTimeout(function() {
+  //   setInterval(function() {
+  //     socket.emit("update", { oven2: [101,45,23,50] })
+  //   }, 2000)
+  // }, 1000);
 
 
-  socket.emit('news', { hello: 'world' });
-  socket.on('my other event', function (data) {
-    console.log(data);
-  });
+  // socket.emit('news', { hello: 'world' });
+  // socket.on('my other event', function (data) {
+  //   console.log(data);
+  // });
 });
