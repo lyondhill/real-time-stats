@@ -1,4 +1,4 @@
-var redis = require("redis").createClient();
+var redis = require("redis").createClient(6379, '10.60.38.98');
 var express = require('express');
   // , routes = require('./routes');
 
@@ -28,7 +28,7 @@ app.configure('production', function(){
 // Routes
 // App stuff
 app.get('/', function(req, res) {
-  res.render('index', { title: 'Express', servers: ['oven1', 'oven2'] })
+  res.render('index', { title: 'Express', servers: ['undefined'] })
 });
 
 

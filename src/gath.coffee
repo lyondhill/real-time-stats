@@ -3,7 +3,7 @@ Gatherer = require './gatherer'
 # daemon = require 'daemon'
 
 port = argv.p ? argv.port ? 6379
-host = argv.h ? argv.host ? '10.60.38.98'
+host = argv.h ? argv.host ? '127.0.0.1'
 
 process.title = 'real-time-gath'
 
