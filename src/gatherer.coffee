@@ -25,6 +25,8 @@ module.exports = class Gatherer
         console.log "cpu: #{cpu}, mem: #{mem}, swap: #{swap}, load: #{load}"
         @current[@hostname] = [cpu, mem, swap, load]
         @redis.publish 'update', JSON.stringify @current
+      else
+        console.log "no match for :#{line}"
 
     dstat.stderr.on 'data', (data) =>
       console.log data.toString()
