@@ -5,7 +5,7 @@ module.exports = class Gatherer
   constructor: (@host, @port) ->
     @redis = require('redis').createClient(@port, @host)
     exec = require('child_process').exec
-    exec "hostname", (error, stdout, stderr) ->
+    exec "hostname", (error, stdout, stderr) =>
      @hostname = stdout.toString()
     @run_stats()
     @current = {}

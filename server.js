@@ -1,4 +1,4 @@
-var redis = require("redis").createClient(6379, '10.60.38.98');
+var redis = require("redis").createClient(process.env.REDIS_PORT, process.env.REDIS_HOST);
 var express = require('express');
   // , routes = require('./routes');
 

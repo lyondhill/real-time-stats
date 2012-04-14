@@ -1,3 +1,12 @@
 #!/usr/bin/env node
 
+if (process.env.REDIS_PORT == null) {
+  process.env.REDIS_PORT = 6379;
+}
+
+if (process.env.REDIS_HOST == null) {
+  process.env.REDIS_HOST = '127.0.0.1';
+}
+
+
 require("../lib/launcher");
