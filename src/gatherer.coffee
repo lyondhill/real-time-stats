@@ -22,8 +22,9 @@ module.exports = class Gatherer
         mem = ((mem_total - parseInt(result[5])) / mem_total * 100)
         swap = parseInt(result[6]) / (parseInt(result[6]) + parseInt(result[7])) *  100
         load = parseInt(result[8])
-        console.log "cpu: #{cpu}, mem: #{mem}, swap: #{swap}, load: #{load}"
+        # console.log "cpu: #{cpu}, mem: #{mem}, swap: #{swap}, load: #{load}"
         @current[@hostname] = [cpu, mem, swap, load]
+        console.log JSON.stringify @current
         @redis.publish 'update', JSON.stringify @current
       else
         console.log "no match for :#{line}"
