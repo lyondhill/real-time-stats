@@ -1,3 +1,85 @@
-#!/usr/bin/env node
+#!/usr/bin/env ruby
 
-require("../lib/gath");
+unless require "redis"
+  puts "redis is not installed"
+  `gem install redis`
+end
+require "redis"
+
+host = ARGV.first || '127.0.0.1'
+port = ARGV.first == ARGV.last ? 6379 : ARGV.last
+redis = Redis.new(:host => "10.0.1.1", :port => 6379)
+
+stuff = nil
+@t = nil
+def start_thread
+  @t = Thread.new do
+    IO.popen("dstat -cmsl --nocolor --noheaders") do |stuff|
+      stuff.each do |line|
+        if line =~ /\d+\s+\d+\s+\d+\s+\d+\s+\d+\s+\d+\|\s*\d+\.?\d?[MkG]\s+\d+\.?\d?[MkG]\s+\d+\.?\d?[MkG]\s+\d+\.?\d?[MkG]\|\s*\d+\.?\d?[MkG]\s+\d+\.?\d?[MkG]\|\s*\d+\.?\d?\.?\d*\s+\d+\.?\d?\.?\d*\s+\d+\.?\d?\.?\d*/
+          parts = line.split ('|')
+          report([get_cpu(parts[0]), get_mem(parts[1]), get_swap(parts[2]), get_load(parts[3])])
+        else
+          # puts "o no"
+          # raise "O NO!!! EXPLODE.. i dont match the regex"
+        end
+      end
+    end
+  end
+end
+
+def hostname
+  @hostname ||= `hostname`.strip
+end
+
+def report(arr)
+  hash = { "#{hostname}" => arr }
+  puts hash.to_s
+  # @redis.publish 'update', JSON.stringify @current
+end
+
+def get_cpu(str)
+  100 - str.split(' ')[2].to_i
+end
+
+def get_mem(str)
+  total = str.split(" ").map {|st| clean_str(st)}.inject(0) {|sum, num| sum += num}.to_f
+  ((total - clean_str(str.split(" ").last)) / total * 100).to_i
+end
+
+def get_swap(str)
+  arr = str.split ' '
+  (clean_str(arr[0]) / (clean_str(arr[0]) + clean_str(arr[1])).to_f *  100).to_i
+end
+
+def get_load(str)
+  str.split(" ").first.to_f
+end
+
+def clean_str(str)
+  if str =~ /(\d+\.?\d?)(\w)/
+    case $2.upcase
+    when 'G'
+      $1.to_i * 1048576
+    when 'M'
+      $1.to_i * 1024
+    when 'K'
+      $1.to_i
+    end
+  else
+    -1
+  end
+end
+
+start_thread
+loop do
+  if @t.alive?
+    puts 't is alive'
+    sleep(10)
+  else
+    puts 't is dead. restarting...'
+    start_thread
+  end
+end
+
+puts "after thread"

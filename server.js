@@ -28,7 +28,7 @@ app.configure('production', function(){
 // Routes
 // App stuff
 app.get('/', function(req, res) {
-  res.render('index', { title: 'Express', servers: ['undefined'] })
+  res.render('index', { title: 'Express', servers: ['oven1', 'oven10', 'oven11'] })
 });
 
 

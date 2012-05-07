@@ -54,7 +54,7 @@ html
           console.log(serv)
           allServers[serv] = new RGraph.Bar(serv, [0,0,0,0]);
           allServers[serv].Set('chart.gutter.left', 35);
-          allServers[serv].Set('chart.colors', ['green', 'red', 'blue', 'purple']);
+          allServers[serv].Set('chart.colors', ['red']);
           allServers[serv].Set('chart.ymax', 100)
           allServers[serv].Set('chart.title', serv);
           allServers[serv].Set('chart.labels', ['CPU','mem','swap','load']);
